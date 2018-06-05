@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addGroceryById} from '../actions';
+import {addGroceryById, removePocketById} from '../actions';
 
 class Grocery extends Component {
     render() {
@@ -11,7 +11,14 @@ class Grocery extends Component {
                     {
                         this.props.grocery.map((item, index) => {
                             return (
-                                <li onClick={() => this.props.addGroceryById(item.id)} className='list-group-item' key={index}>
+                                <li onClick={() =>{ 
+                                    if (this.props.pocket) {
+                                        this.props.addGroceryById(item.id);
+                                        this.props.removePocketById(item.id) ;
+                                    }
+             
+                                    }
+                                    } className='list-group-item' key={index}>
                                     <b>{item.name}</b> - 
                                     <span className='label label-primary'>${item.cost}</span> - <span className='label label-info'>{item.calories} kcal</span> - <span className='label label-warning'>{item.weight} mg</span>
                                 </li>
@@ -27,12 +34,9 @@ class Grocery extends Component {
 
 function mapStateToProps(state) { 
     return {
-        grocery: state.grocery
+        grocery: state.grocery,
+        pocket: state.pocket
     }
 }
 
-function mapDispatchToProps() {
-
-}
-
-export default connect(mapStateToProps, {addGroceryById})(Grocery);
+export default connect(mapStateToProps, {addGroceryById, removePocketById})(Grocery);

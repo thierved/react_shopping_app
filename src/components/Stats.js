@@ -9,6 +9,18 @@ class Stats extends Component {
         return total;
     }
 
+    calories() {
+        let total = 0;
+        this.props.shoppingBag.forEach(item => total += item.calories);
+        return total;
+    }
+
+    weight() {
+        let total = 0;
+        this.props.shoppingBag.forEach(item => total += item.weight);
+        return total;
+    }
+
     render() {
                     
         return (
@@ -16,8 +28,8 @@ class Stats extends Component {
                 <h2 className='text-center'>Stats items</h2>
                 <ul className='list-group'>
                     <li className='list-group-item'>Cost - ${this.cost()}</li> 
-                    <li className='list-group-item'>Calories</li>
-                    <li className='list-group-item'>Weight</li>
+                    <li className='list-group-item'>Calories - ${this.calories()}</li>
+                    <li className='list-group-item'>Weight - ${this.weight()}</li>
                 </ul>
             </div>
         );
@@ -28,10 +40,6 @@ function mapStateToProps(state) {
     return {
         shoppingBag: state.shoppingBag
     }
-}
-
-function mapDispatchToProps() {
-
 }
 
 export default connect(mapStateToProps, null)(Stats);
